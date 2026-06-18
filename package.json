@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@remix-run/dev": "^2.8.1",
-  "@remix-run/eslint-config": "^2.8.1",
+    "@remix-run/eslint-config": "^2.8.1",
     "@shopify/api-codegen-preset": "^1.1.1",
     "prisma": "^5.11.0",
     "vite": "^5.1.0",
