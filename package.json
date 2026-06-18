@@ -2,7 +2,7 @@
   "name": "cart-drawer-app",
   "private": true,
   "scripts": {
-    "build": "remix vite:build",
+    "build": "npx remix vite:build",
     "dev": "shopify app dev",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "setup": "prisma generate && prisma migrate deploy",
