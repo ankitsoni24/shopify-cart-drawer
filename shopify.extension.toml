@@ -1,0 +1,50 @@
+api_version = "2024-10"
+
+[[extensions]]
+type = "theme"
+name = "Cart Drawer"
+handle = "cart-drawer"
+
+  [extensions.settings]
+
+  [[extensions.settings.fields]]
+  key = "enabled"
+  type = "boolean"
+  label = "Enable Cart Drawer"
+  default = true
+
+  [[extensions.settings.fields]]
+  key = "drawer_title"
+  type = "text"
+  label = "Drawer title"
+  default = "Your Cart"
+
+  [[extensions.settings.fields]]
+  key = "free_shipping_threshold"
+  type = "number_integer"
+  label = "Free shipping threshold (in dollars)"
+  default = 50
+
+  [[extensions.settings.fields]]
+  key = "accent_color"
+  type = "color"
+  label = "Accent color"
+  default = "#000000"
+
+  [[extensions.settings.fields]]
+  key = "checkout_button_text"
+  type = "text"
+  label = "Checkout button text"
+  default = "Checkout"
+
+  [[extensions.settings.fields]]
+  key = "enable_upsells"
+  type = "boolean"
+  label = "Show upsell products"
+  default = true
+
+  [[extensions.settings.fields]]
+  key = "enable_sticky_atc"
+  type = "boolean"
+  label = "Enable sticky Add to Cart bar"
+  default = true

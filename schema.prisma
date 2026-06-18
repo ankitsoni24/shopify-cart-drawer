@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id            String    @id
+  shop          String
+  state         String
+  isOnline      Boolean   @default(false)
+  scope         String?
+  expires       DateTime?
+  accessToken   String
+  userId        BigInt?
+  firstName     String?
+  lastName      String?
+  email         String?
+  accountOwner  Boolean   @default(false)
+  locale        String?
+  collaborator  Boolean?  @default(false)
+  emailVerified Boolean?  @default(false)
+}
+
+model CartDrawerSettings {
+  id                     String   @id @default(cuid())
+  shop                   String   @unique
+  // Drawer general
+  drawerTitle            String   @default("Your Cart")
+  accentColor            String   @default("#000000")
+  buttonTextColor        String   @default("#ffffff")
+  emptyCartMessage       String   @default("Your cart is empty")
+  emptyCartButtonText    String   @default("Continue Shopping")
+  emptyCartButtonUrl     String   @default("/")
+  // Shipping bar
+  enableShippingBar      Boolean  @default(true)
+  freeShippingThreshold  Int      @default(5000)  // in cents
+  shippingBarText        String   @default("Spend {amount} more for FREE shipping!")
+  shippingUnlockedText   String   @default("🎉 You've unlocked FREE shipping!")
+  // Upsells
+  enableUpsells          Boolean  @default(true)
+  upsellTitle            String   @default("You might also like")
+  upsellProductIds       String   @default("[]") // JSON array
+  // Sticky ATC
+  enableStickyAtc        Boolean  @default(true)
+  stickyAtcText          String   @default("Add to Cart")
+  // Discount
+  enableDiscountField    Boolean  @default(true)
+  discountPlaceholder    String   @default("Discount code")
+  // Checkout
+  checkoutButtonText     String   @default("Checkout")
+  noteEnabled            Boolean  @default(false)
+  noteLabel              String   @default("Order note")
+  // Countdown timer
+  enableCountdown        Boolean  @default(false)
+  countdownMinutes       Int      @default(10)
+  countdownText          String   @default("⏰ Hurry! Cart reserved for {time}")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}

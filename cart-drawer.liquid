@@ -1,0 +1,160 @@
+{% if block.settings.enabled %}
+
+<!-- ECD: Cart Drawer Root -->
+<div id="ecd-root" aria-live="polite">
+
+  <!-- Overlay -->
+  <div id="ecd-overlay" class="ecd-overlay" aria-hidden="true"></div>
+
+  <!-- Drawer -->
+  <div
+    id="ecd-drawer"
+    class="ecd-drawer"
+    role="dialog"
+    aria-modal="true"
+    aria-label="{{ block.settings.drawer_title | escape }}"
+    aria-hidden="true"
+  >
+    <!-- Header -->
+    <div class="ecd-header">
+      <h2 class="ecd-header__title" id="ecd-header-title">
+        {{ block.settings.drawer_title }}
+      </h2>
+      <span class="ecd-header__count" id="ecd-item-count"></span>
+      <button class="ecd-header__close" id="ecd-close" aria-label="Close cart" type="button">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 1L17 17M17 1L1 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Shipping Bar -->
+    <div class="ecd-shipping-bar" id="ecd-shipping-bar" hidden>
+      <div class="ecd-shipping-bar__text" id="ecd-shipping-text"></div>
+      <div class="ecd-shipping-bar__track">
+        <div class="ecd-shipping-bar__fill" id="ecd-shipping-fill"></div>
+      </div>
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="ecd-countdown" id="ecd-countdown" hidden>
+      <span id="ecd-countdown-text"></span>
+    </div>
+
+    <!-- Scrollable body -->
+    <div class="ecd-body" id="ecd-body">
+
+      <!-- Empty state -->
+      <div class="ecd-empty" id="ecd-empty" hidden>
+        <svg class="ecd-empty__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="31" stroke="currentColor" stroke-width="2"/>
+          <path d="M20 24h24l-3 14H23L20 24z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M16 20h4l2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="26" cy="42" r="2" fill="currentColor"/>
+          <circle cx="38" cy="42" r="2" fill="currentColor"/>
+        </svg>
+        <p class="ecd-empty__message" id="ecd-empty-message">Your cart is empty</p>
+        <a class="ecd-empty__btn" id="ecd-empty-btn" href="/">Continue Shopping</a>
+      </div>
+
+      <!-- Line Items -->
+      <div class="ecd-items" id="ecd-items" role="list"></div>
+
+      <!-- Order Note -->
+      <div class="ecd-note" id="ecd-note-section" hidden>
+        <label class="ecd-note__label" for="ecd-note-input" id="ecd-note-label">Order note</label>
+        <textarea class="ecd-note__input" id="ecd-note-input" rows="2" placeholder="Any special instructions?"></textarea>
+      </div>
+
+      <!-- Upsells -->
+      <div class="ecd-upsells" id="ecd-upsells" hidden>
+        <p class="ecd-upsells__title" id="ecd-upsells-title">You might also like</p>
+        <div class="ecd-upsells__track" id="ecd-upsells-track"></div>
+      </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="ecd-footer" id="ecd-footer" hidden>
+
+      <!-- Discount Code -->
+      <div class="ecd-discount" id="ecd-discount-section" hidden>
+        <div class="ecd-discount__row">
+          <input class="ecd-discount__input" id="ecd-discount-input" type="text" placeholder="Discount code" aria-label="Discount code" />
+          <button class="ecd-discount__btn" id="ecd-discount-apply" type="button">Apply</button>
+        </div>
+        <div class="ecd-discount__feedback" id="ecd-discount-feedback" hidden></div>
+      </div>
+
+      <!-- Subtotal -->
+      <div class="ecd-totals">
+        <div class="ecd-totals__row">
+          <span class="ecd-totals__label">Subtotal</span>
+          <span class="ecd-totals__value" id="ecd-subtotal"></span>
+        </div>
+        <p class="ecd-totals__note">Taxes and shipping calculated at checkout</p>
+      </div>
+
+      <!-- Checkout Button -->
+      <a class="ecd-checkout-btn" id="ecd-checkout-btn" href="/checkout">
+        <span id="ecd-checkout-text">Checkout</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <button class="ecd-continue-btn" id="ecd-continue-btn" type="button">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky ATC Bar -->
+<div id="ecd-sticky-atc" class="ecd-sticky-atc" hidden>
+  <div class="ecd-sticky-atc__product" id="ecd-sticky-product">
+    <img class="ecd-sticky-atc__img" id="ecd-sticky-img" src="" alt="" />
+    <div class="ecd-sticky-atc__info">
+      <span class="ecd-sticky-atc__title" id="ecd-sticky-title"></span>
+      <span class="ecd-sticky-atc__price" id="ecd-sticky-price"></span>
+    </div>
+  </div>
+  <button class="ecd-sticky-atc__btn" id="ecd-sticky-btn" type="button">Add to Cart</button>
+</div>
+
+<script>
+  window.__ECD__ = {
+    shop: {{ shop.permanent_domain | json }},
+    currency: {{ shop.currency | json }},
+    moneyFormat: {{ shop.money_format | json }},
+    proxyUrl: "/apps/cart-drawer",
+    settings: {
+      drawerTitle: {{ block.settings.drawer_title | json }},
+      accentColor: {{ block.settings.accent_color | json }},
+      checkoutButtonText: {{ block.settings.checkout_button_text | json }},
+      freeShippingThreshold: {{ block.settings.free_shipping_threshold | times: 100 }},
+      enableUpsells: {{ block.settings.enable_upsells | json }},
+      enableStickyAtc: {{ block.settings.enable_sticky_atc | json }},
+    },
+    isProductPage: {{ request.page_type | json }} === "product",
+    cartUrl: "/cart",
+    checkoutUrl: "/checkout",
+  };
+</script>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "target": "body",
+  "javascript": "cart-drawer.js",
+  "stylesheet": "cart-drawer.css",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Enable Cart Drawer", "default": true },
+    { "type": "text", "id": "drawer_title", "label": "Drawer title", "default": "Your Cart" },
+    { "type": "number", "id": "free_shipping_threshold", "label": "Free shipping threshold ($)", "default": 50 },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#000000" },
+    { "type": "text", "id": "checkout_button_text", "label": "Checkout button text", "default": "Checkout" },
+    { "type": "checkbox", "id": "enable_upsells", "label": "Show upsell products", "default": true },
+    { "type": "checkbox", "id": "enable_sticky_atc", "label": "Sticky Add to Cart", "default": true }
+  ]
+}
+{% endschema %}
+{% endif %}

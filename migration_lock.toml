@@ -1,0 +1,50 @@
+-- CreateTable
+CREATE TABLE "Session" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "shop" TEXT NOT NULL,
+    "state" TEXT NOT NULL,
+    "isOnline" BOOLEAN NOT NULL DEFAULT false,
+    "scope" TEXT,
+    "expires" DATETIME,
+    "accessToken" TEXT NOT NULL,
+    "userId" BIGINT,
+    "firstName" TEXT,
+    "lastName" TEXT,
+    "email" TEXT,
+    "accountOwner" BOOLEAN NOT NULL DEFAULT false,
+    "locale" TEXT,
+    "collaborator" BOOLEAN DEFAULT false,
+    "emailVerified" BOOLEAN DEFAULT false
+);
+
+-- CreateTable
+CREATE TABLE "CartDrawerSettings" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "shop" TEXT NOT NULL,
+    "drawerTitle" TEXT NOT NULL DEFAULT 'Your Cart',
+    "accentColor" TEXT NOT NULL DEFAULT '#000000',
+    "buttonTextColor" TEXT NOT NULL DEFAULT '#ffffff',
+    "emptyCartMessage" TEXT NOT NULL DEFAULT 'Your cart is empty',
+    "emptyCartButtonText" TEXT NOT NULL DEFAULT 'Continue Shopping',
+    "emptyCartButtonUrl" TEXT NOT NULL DEFAULT '/',
+    "enableShippingBar" BOOLEAN NOT NULL DEFAULT true,
+    "freeShippingThreshold" INTEGER NOT NULL DEFAULT 5000,
+    "shippingBarText" TEXT NOT NULL DEFAULT 'Spend {amount} more for FREE shipping!',
+    "shippingUnlockedText" TEXT NOT NULL DEFAULT 'You''ve unlocked FREE shipping!',
+    "enableUpsells" BOOLEAN NOT NULL DEFAULT true,
+    "upsellTitle" TEXT NOT NULL DEFAULT 'You might also like',
+    "upsellProductIds" TEXT NOT NULL DEFAULT '[]',
+    "enableStickyAtc" BOOLEAN NOT NULL DEFAULT true,
+    "stickyAtcText" TEXT NOT NULL DEFAULT 'Add to Cart',
+    "enableDiscountField" BOOLEAN NOT NULL DEFAULT true,
+    "discountPlaceholder" TEXT NOT NULL DEFAULT 'Discount code',
+    "checkoutButtonText" TEXT NOT NULL DEFAULT 'Checkout',
+    "noteEnabled" BOOLEAN NOT NULL DEFAULT false,
+    "noteLabel" TEXT NOT NULL DEFAULT 'Order note',
+    "enableCountdown" BOOLEAN NOT NULL DEFAULT false,
+    "countdownMinutes" INTEGER NOT NULL DEFAULT 10,
+    "countdownText" TEXT NOT NULL DEFAULT 'Cart reserved for {time}',
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "CartDrawerSettings_shop_key" UNIQUE ("shop")
+);

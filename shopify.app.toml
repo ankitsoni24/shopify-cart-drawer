@@ -1,0 +1,41 @@
+name = "Cart Drawer"
+client_id = "YOUR_CLIENT_ID"
+application_url = "https://YOUR_APP_URL.com"
+embedded = true
+
+[access_scopes]
+scopes = "read_products,write_cart_transforms,read_themes,write_themes,read_orders"
+
+[auth]
+redirect_urls = [
+  "https://YOUR_APP_URL.com/auth/callback",
+  "https://YOUR_APP_URL.com/auth/shopify/callback",
+  "https://YOUR_APP_URL.com/shopify/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = ["app/uninstalled"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  topics = ["customers/data_request"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  topics = ["customers/redact"]
+  uri = "/webhooks"
+
+  [[webhooks.subscriptions]]
+  topics = ["shop/redact"]
+  uri = "/webhooks"
+
+[app_proxy]
+url = "https://YOUR_APP_URL.com/proxy"
+subpath = "cart-drawer"
+prefix = "apps"
+
+[pos]
+embedded = false
